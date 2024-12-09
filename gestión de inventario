@@ -1,0 +1,69 @@
+class Product:  
+    def __init__(self, sku, name, quantity):  
+        self.sku = sku  
+        self.name = name  
+        self.quantity = quantity  
+
+    def __str__(self):  
+        return f'SKU: {self.sku}, Name: {self.name}, Quantity: {self.quantity}'  
+
+class Inventory:  
+    def __init__(self):  
+        self.products = {}  
+
+    def add_product(self, sku, name, quantity):  
+        """Adds a new product or updates the quantity of an existing one."""  
+        if sku in self.products:  
+            print(f"Product with SKU {sku} already exists. Updating quantity.")  
+            self.products[sku].quantity += quantity  
+        else:  
+            self.products[sku] = Product(sku, name, quantity)  
+        print(f"Product added or updated: {self.products[sku]}")  
+
+    def remove_product(self, sku):  
+        """Removes a product from the inventory by SKU."""  
+        if sku in self.products:  
+            del self.products[sku]  
+            print(f"Product with SKU {sku} removed.")  
+        else:  
+            print(f"Product with SKU {sku} not found in inventory.")  
+
+    def view_inventory(self):  
+        """Displays the current inventory."""  
+        if not self.products:  
+            print("Inventory is empty.")  
+        else:  
+            print("Current Inventory:")  
+            for product in self.products.values():  
+                print(product)  
+
+def main():  
+    """Main function to run the inventory management system."""  
+    inventory = Inventory()  
+
+    while True:  
+        print("\nInventory Management System")  
+        print("1. Add Product")  
+        print("2. Remove Product")  
+        print("3. View Inventory")  
+        print("4. Exit")  
+        choice = input("Enter your choice: ")  
+
+        if choice == '1':  
+            sku = input("Enter SKU: ")  
+            name = input("Enter product name: ")  
+            quantity = int(input("Enter quantity: "))  
+            inventory.add_product(sku, name, quantity)  
+        elif choice == '2':  
+            sku = input("Enter SKU of the product to remove: ")  
+            inventory.remove_product(sku)  
+        elif choice == '3':  
+            inventory.view_inventory()  
+        elif choice == '4':  
+            print("Exiting the system.")  
+            break  
+        else:  
+            print("Invalid choice. Please enter again.")  
+
+if __name__ == "__main__":  
+    main()  
